@@ -124,8 +124,15 @@ recognition.onresult = (e) => {
 recognition.onend = () => recognition.start();
 recognition.start();
 
-window.onkeydown = (event) => {
-    event.preventDefault();
+let space = false;
 
-    if (event.key == " ") skip();
+setInterval(() => space = false, 400);
+
+window.onkeydown = (event) => {
+    if (event.key == " ") {
+        if (space) {
+            skip();
+            space = false;
+        } else space = true;
+    }
 }
