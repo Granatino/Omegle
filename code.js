@@ -127,7 +127,5 @@ recognition.start();
 window.onkeydown = (event) => {
     event.preventDefault();
 
-    if (event.key != " ") return;
-
-    skip();
+    if (event.key == " ") skip();
 }
