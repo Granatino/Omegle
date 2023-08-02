@@ -1,5 +1,7 @@
 let ip;
 let INSTAGRAM = "valentin.granata";
+let skipWords = ["pippo", "skippo", "skip"];
+let instagramWords = ["insta", "instagram"];
 
 let copyToClipboard = (text) => {
     const elem = document.createElement("textarea");
@@ -87,12 +89,12 @@ recognition.onresult = (e) => {
         args.splice(0, argsLength);
 
     args.map(arg => arg.toLowerCase()).forEach((arg) => {
-        if (arg == "skip" || arg == "skippo" || arg == "pippo") {
+        if (skipWords.includes(arg)) {
             skip();
             return;
         }
 
-        if (arg == "insta" || arg == "instagram") {
+        if (instagramWords.includes(arg)) {
             const btns = document.getElementsByClassName("sendbtn");
 
             const chats = document.querySelectorAll("textarea");
