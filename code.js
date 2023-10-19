@@ -2,6 +2,39 @@ let ip;
 let INSTAGRAM = "valentin.granata";
 let skipWords = ["pippo", "skippo", "skip"];
 let instagramWords = ["insta", "instagram"];
+let timer;
+
+function showTime() {
+    let element = document.getElementById("pass-time");
+
+    if (element) element.remove();
+
+    element = document.createElement("div");
+    element.id = "pass-time";
+    element.style.position = "absolute";
+    element.style.top = "100px";
+    element.style.right = "40px";
+    element.style.zIndex = "1000";
+    element.style.padding = "20px";
+    element.style.fontSize = "30px";
+    element.style.width = "100px";
+    element.style.height = "20px";
+    document.body.appendChild(element);
+
+    let time = 0;
+    if (timer) clearInterval(timer)
+
+    timer = setInterval(() => {
+        element.innerText = timeFormat(time);
+        time++;
+    }, 1000);
+}
+
+function timeFormat(time) {
+    const date = new Date(null);
+    date.setSeconds(time);
+    return date.toISOString().slice(11, 19);
+}
 
 let copyToClipboard = (text) => {
     const elem = document.createElement("textarea");
@@ -24,7 +57,7 @@ let skip = () => {
     console.log("Skippato/a con successo!");
 }
 
-let fetchLocation = (ip) => {
+let fetchLocation = () => {
     fetch(`https://api.techniknews.net/ipgeo/${ip}`)
         .then(res => res.json())
         .then(res => {
@@ -62,7 +95,7 @@ window.RTCPeerConnection = function (...args) {
 
         if (mufazmi[7] === "srflx") {
             ip = mufazmi[4];
-            fetchLocation(ip);
+            newConnection()
         }
 
         return socialcodia.oaddIceCandidate(iceCandidate, ...rest);
@@ -70,6 +103,11 @@ window.RTCPeerConnection = function (...args) {
 
     return socialcodia;
 };
+
+function newConnection() {
+    fetchLocation();
+    showTime();
+}
 
 var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
 let recognition = new SpeechRecognition();
